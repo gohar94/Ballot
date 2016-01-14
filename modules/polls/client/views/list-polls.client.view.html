@@ -1,8 +1,8 @@
 <section ng-controller="PollsController" ng-init="find()">
-  <div class="page-header">
+  <div class="page-header text-center">
     <h1>Polls</h1>
   </div>
-  <div class="panel panel-default col-md-6 col-md-offset-3">
+  <!-- <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
     <ul ng-repeat="poll in polls" ui-sref="polls.view({pollId: poll._id})">
       <div class="panel-heading text-center">
         <h3 class="panel-title" ng-bind="poll.description"></h3>
@@ -29,6 +29,41 @@
         </small>
       </div>
     </ul>
+  </div> -->
+  <div class="list-group">
+    <div class="col-sm-6 col-xs-12" ng-repeat="poll in polls">
+      <a class="list-group-item" ui-sref="polls.view({pollId: poll._id})">
+        <h4 class="text-center">
+          <i class="glyphicon glyphicon-user"></i>
+        </h4>
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <h4 ng-bind="poll.description" class="text-center"></h4>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="badge" ng-bind="poll.optionAVotes"></span>
+                {{poll.optionA}}
+              </li>
+              <li class="list-group-item">
+                <span class="badge" ng-bind="poll.optionBVotes"></span>
+                {{poll.optionB}}
+              </li>
+            </ul>
+            <div class="text-center">
+              <small class="list-group-item-text text-muted">
+                <b><span ng-bind="poll.created | date:'mediumDate'"></span></b>
+                by
+                <b><span ng-if="poll.user" ng-bind="poll.user.displayName"></span></b>
+                <span ng-if="!poll.user">Deleted User</span>
+                in
+                <b><span ng-if="poll.user" ng-bind="poll.category"></span></b>
+              </small>
+            </div>
+          </div>
+        </div>
+      </a>
+      <br>
+    </div>
   </div>
   <div class="alert alert-warning text-center" ng-if="polls.$resolved && !polls.length">
     No polls yet, why don't you <a ui-sref="polls.create">create one</a>?
