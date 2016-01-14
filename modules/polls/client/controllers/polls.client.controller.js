@@ -17,8 +17,10 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
 
       // Create new Poll object
       var poll = new Polls({
-        title: this.title,
-        content: this.content
+        description: this.description,
+        optionA: this.optionA,
+        optionB: this.optionB,
+        category: this.category
       });
 
       // Redirect after save
@@ -26,8 +28,10 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
         $location.path('polls/' + response._id);
 
         // Clear form fields
-        $scope.title = '';
-        $scope.content = '';
+        $scope.description = '';
+        $scope.optionA = '';
+        $scope.optionB = '';
+        $scope.category = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });

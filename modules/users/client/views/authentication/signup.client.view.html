@@ -5,8 +5,12 @@
       <fieldset>
         <div class="form-group">
           <div ng-show="error" class="text-center text-danger">
-            <div class="alert alert-danger" role="alert">
-              <strong ng-bind="error"></strong>
+            <div data-ng-show="error" class="text-danger">
+              <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <strong data-ng-bind="error"></strong>
+              </div>
             </div>
           </div>
         </div>
@@ -78,9 +82,6 @@
           <br>
           or&nbsp;
           <a ui-sref="authentication.signin" class="show-signup">Sign in</a>
-        </div>
-        <div ng-show="error" class="text-center text-danger">
-          <strong ng-bind="error"></strong>
         </div>
       </fieldset>
     </form>

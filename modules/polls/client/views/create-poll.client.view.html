@@ -2,25 +2,41 @@
   <div class="page-header">
     <h1>New Poll</h1>
   </div>
-  <div class="col-md-12">
+  <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 create-form-bg">
     <form name="pollForm" class="form-horizontal" ng-submit="create(pollForm.$valid)" novalidate>
       <fieldset>
-        <div class="form-group" show-errors>
-          <label for="title">Title</label>
-          <input name="title" type="text" ng-model="title" id="title" class="form-control" placeholder="Title" required>
-          <div ng-messages="pollForm.title.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Poll title is required.</p>
+        <div class="form-group">
+          <div ng-show="error" class="text-center text-danger">
+            <div data-ng-show="error" class="text-danger">
+              <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <strong data-ng-bind="error"></strong>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="content">Content</label>
-          <textarea name="content" ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+        <div class="form-group" show-errors>
+          <label for="title">Description</label>
+          <input name="title" type="text" ng-model="description" ng-maxlength="140" maxlength="140" id="description" class="form-control" placeholder="Description" required>
+          <div ng-messages="pollForm.description.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Poll description is required.</p>
+          </div>
         </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-default">
+        <div class="form-group" show-errors>
+          <label for="content">Option A</label>
+          <input name="optionA" type="text" ng-maxlength="50" maxlength="50" ng-model="optionA" id="optionA" class="form-control" placeholder="Option A" required></input>
         </div>
-        <div ng-show="error" class="text-danger">
-          <strong ng-bind="error"></strong>
+        <div class="form-group" show-errors>
+          <label for="optionB">Option B</label>
+          <input name="optionB" type="text" ng-maxlength="50" maxlength="50" ng-model="optionB" id="optionB" class="form-control" placeholder="Option B" required></input>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="category">Category</label>
+          <input name="category" type="text" ng-model="category" id="category" class="form-control" placeholder="Category" required></input>
+        </div>
+        <div class="text-center form-group">
+          <button type="submit" class="btn btn-large btn-success">Submit</button>
         </div>
       </fieldset>
     </form>
