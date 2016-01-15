@@ -12,13 +12,14 @@
       </div>
       <br>
     </div>
-    <div class="col-xs-12 col-sm-12 text-center" ui-sref="polls.create">
-      <button type="button" class="btn btn-success text-center">
+    <div class="col-xs-12 col-sm-12 text-center">
+      <button type="button" class="btn btn-success text-center" ng-click="pollsCtrl.modalCreate('sm')">
         <i class="glyphicon glyphicon-erase"></i>
         New Poll
       </button>
       <hr/>
     </div>
   </div>
+  <!-- TODO CHECK IF THIS WORKS -->
   <poll-list></poll-list>
 </section>

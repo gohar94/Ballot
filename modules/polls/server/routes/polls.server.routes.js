@@ -13,7 +13,6 @@ module.exports = function (app) {
     .post(polls.create);
 
   // Voting
-  // 
   app.route('/api/polls/vote').all(pollsPolicy.isAllowedToVote)
     .post(polls.vote);
 

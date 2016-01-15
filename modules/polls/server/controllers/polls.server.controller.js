@@ -80,7 +80,7 @@ exports.vote = function (req, res) {
     });
   }
   
-  Poll.findOne(poll._id).exec(function (err, _pollReal) {
+  Poll.findOne({_id: poll._id}).exec(function (err, _pollReal) {
     if (err) {
       console.log(err);
       return res.status(400).send({
@@ -93,7 +93,7 @@ exports.vote = function (req, res) {
       });
     } else {
       console.log("found poll");
-      PollVoter.findOne({ poll: _pollReal, voter: req.use r}).exec(function (err1, _pollVoter) {
+      PollVoter.findOne({$and: [{poll: _pollReal}, {voter: req.user }]}).exec(function (err1, _pollVoter) {
         if (err) {
           console.log(err1);
           return res.status(400).send({
@@ -138,6 +138,8 @@ exports.vote = function (req, res) {
             }
           });
         } else {
+          console.log("sending this same crap");
+          console.log(_pollVoter);
           res.json(_pollVoter);
         }
       });

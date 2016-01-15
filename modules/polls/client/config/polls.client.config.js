@@ -17,11 +17,12 @@ angular.module('polls').run(['Menus',
       state: 'polls.list'
     });
 
-    // Add the dropdown create item
-    Menus.addSubMenuItem('topbar', 'polls', {
-      title: 'Create Polls',
-      state: 'polls.create',
-      roles: ['user']
-    });
+    // This has been moved into a modal
+    // // Add the dropdown create item
+    // Menus.addSubMenuItem('topbar', 'polls', {
+    //   title: 'Create Polls',
+    //   state: 'polls.create',
+    //   roles: ['user']
+    // });
   }
 ]);

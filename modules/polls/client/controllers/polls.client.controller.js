@@ -11,8 +11,32 @@ pollsApp.controller('PollsController', ['$scope', '$stateParams','Authentication
     // Find a list of Polls
     this.polls = Polls.query();
 
+    // Open a modal for creating poll records
+    this.modalCreate = function (size) {
+      var modalInstance = $modal.open({
+        animation: this.animationsEnabled,
+        templateUrl: 'modules/polls/client/views/create-poll.client.view.html',
+        controller: function ($scope, $modalInstance) {
+
+          $scope.ok = function () {
+            $modalInstance.close();
+          };
+
+          $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+        },
+        size: size
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     // Open a modal for updating poll records
-    this.modalViewDetails = function (size, selectedPoll) {
+    this.modalUpdate = function (size, selectedPoll) {
       var modalInstance = $modal.open({
         animation: this.animationsEnabled,
         templateUrl: 'modules/polls/client/views/edit-poll.client.view.html',
@@ -60,9 +84,9 @@ pollsApp.controller('PollsCreateController', ['$scope', 'Polls', '$log',
     // Create new Poll
     this.create = function (isValid) {
       $scope.error = null;
-      $log.error("akaa");
+      $log.info("akaa");
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'pollForm');
+        $scope.$broadcast('show-errors-check-validity', 'pollCreateForm');
 
         return false;
       }
@@ -110,6 +134,17 @@ pollsApp.controller('PollsUpdateController', ['$scope', 'Polls',
     };
   }
 ]);
+
+pollsApp.directive('pollList', [function() {
+  return {
+    restrict: 'E',
+    transclude: true,
+    templateUrl: 'modules/polls/client/views/poll-list-template.html',
+    link: function (scope, element, attrs) {
+
+    }
+  };
+}]);
 
   //   // Remove existing Poll
   //   $scope.remove = function (poll) {
