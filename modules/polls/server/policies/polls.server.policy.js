@@ -70,3 +70,39 @@ exports.isAllowed = function (req, res, next) {
     }
   });
 };
+
+/**
+ * Check If Allowed to Vote
+ */
+exports.isAllowedToVote = function (req, res, next) {
+  var roles = (req.user) ? req.user.roles : ['guest'];
+
+  // If an poll is being processed and the current user created it then do not allow any manipulation
+  console.log("poll");
+  console.log(req.body.poll.user._id);
+  console.log(req.user.id);
+  if (req.body.poll && req.user && req.body.poll.user) {
+    if (String(req.body.poll.user._id) === String(req.user._id)) {
+      // don't process this
+    } else {
+      return next();
+    }
+  }
+
+  // Check for user roles
+  acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowedToVote) {
+    if (err) {
+      // An authorization error occurred.
+      return res.status(500).send('Unexpected authorization error');
+    } else {
+      if (isAllowedToVote) {
+        // Access granted! Invoke next middleware
+        return next();
+      } else {
+        return res.status(403).json({
+          message: 'User is not authorized'
+        });
+      }
+    }
+  });
+};

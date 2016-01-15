@@ -75,4 +75,26 @@ var PollSchema = new Schema({
   }
 });
 
+var PollVotersSchema = new Schema({
+  poll: {
+    type: Schema.ObjectId,
+    required: true,
+    ref: 'poll'
+  },
+  voter: {
+    type: Schema.ObjectId,
+    required: true,
+    ref: 'user'
+  },
+  option: {
+    type: String,
+    required: true,
+    enum: ['A', 'B']
+  }
+});
+
+// Each voter can vote only once
+PollVotersSchema.index({ poll: 1, voter: 1 }, { unique: true });
+
 mongoose.model('Poll', PollSchema);
+mongoose.model('PollVoter', PollVotersSchema);

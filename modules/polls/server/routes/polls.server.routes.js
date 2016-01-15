@@ -12,6 +12,11 @@ module.exports = function (app) {
     .get(polls.list)
     .post(polls.create);
 
+  // Voting
+  // 
+  app.route('/api/polls/vote').all(pollsPolicy.isAllowedToVote)
+    .post(polls.vote);
+
   // Single poll routes
   app.route('/api/polls/:pollId').all(pollsPolicy.isAllowed)
     .get(polls.read)
