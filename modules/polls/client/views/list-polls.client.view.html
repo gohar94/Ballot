@@ -2,37 +2,27 @@
   <div class="page-header text-center">
     <h1>Polls</h1>
   </div>
-  <!-- <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
-    <ul ng-repeat="poll in polls" ui-sref="polls.view({pollId: poll._id})">
-      <div class="panel-heading text-center">
-        <h3 class="panel-title" ng-bind="poll.description"></h3>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Go!</button>
+        </span>
       </div>
-      <div class="panel-body">
-        <li class="list-group-item">
-          <span class="badge" ng-bind="poll.optionAVotes"></span>
-          <h5 class="list-group-item-text" ng-bind="poll.optionA"></h5>
-        </li>
-        <li class="list-group-item">
-          <span class="badge" ng-bind="poll.optionBVotes"></span>
-          <h5 class="list-group-item-text" ng-bind="poll.optionB"></h5>
-        </li>
-      </div>
-      <div class="panel-footer text-center">
-        <small class="list-group-item-text">
-          Posted on
-          <b><span ng-bind="poll.created | date:'mediumDate'"></span></b>
-          by
-          <b><span ng-if="poll.user" ng-bind="poll.user.displayName"></span></b>
-          <span ng-if="!poll.user">Deleted User</span>
-          in the category 
-          <b><span ng-if="poll.user" ng-bind="poll.category"></span></b>
-        </small>
-      </div>
-    </ul>
-  </div> -->
+      <br>
+    </div>
+    <div class="col-xs-12 col-sm-12 text-center" ui-sref="polls.create">
+      <button type="button" class="btn btn-success text-center">
+        <i class="glyphicon glyphicon-erase"></i>
+        New Poll
+      </button>
+      <hr/>
+    </div>
+  </div>
   <div class="list-group">
-    <div class="col-sm-6 col-xs-12" ng-repeat="poll in polls">
-      <a class="list-group-item" ui-sref="polls.view({pollId: poll._id})">
+    <div class="col-sm-offset-3 col-sm-6 col-xs-12" ng-repeat="poll in polls | filter:searchText">
+      <div class="list-group-item">
         <h4 class="text-center">
           <i class="glyphicon glyphicon-user"></i>
         </h4>
@@ -50,18 +40,23 @@
               </li>
             </ul>
             <div class="text-center">
+              <a ui-sref="polls.view({pollId: poll._id})">View Details</a>
+              <i class="glyphicon glyphicon-sunglasses" ui-sref="polls.view({pollId: poll._id})"></i>
+              <br><br>
+            </div>
+            <div class="text-center">
               <small class="list-group-item-text text-muted">
                 <b><span ng-bind="poll.created | date:'mediumDate'"></span></b>
                 by
                 <b><span ng-if="poll.user" ng-bind="poll.user.displayName"></span></b>
-                <span ng-if="!poll.user">Deleted User</span>
+                <b><span ng-if="!poll.user">Deleted User</span></b>
                 in
                 <b><span ng-if="poll.user" ng-bind="poll.category"></span></b>
               </small>
             </div>
           </div>
         </div>
-      </a>
+      </div>
       <br>
     </div>
   </div>

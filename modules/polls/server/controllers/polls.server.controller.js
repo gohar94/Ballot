@@ -39,8 +39,12 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var poll = req.poll;
 
-  poll.title = req.body.title;
-  poll.content = req.body.content;
+  poll.description = req.body.description;
+  poll.optionA = req.body.optionA;
+  poll.optionAVotes = 0;
+  poll.optionB = req.body.optionB;
+  poll.optionBVotes = 0;
+  poll.category = req.body.category;
 
   poll.save(function (err) {
     if (err) {
