@@ -1,6 +1,9 @@
 <section ng-controller="PollsController" ng-init="findOne()">
   <div class="page-header text-center">
-    <h1>Details</h1>
+    <h1>
+      <i class="glyphicon glyphicon-sunglasses"></i>
+      Details
+    </h1>
   </div>
   <div class="list-group">
     <div class="col-sm-offset-3 col-sm-6 col-xs-12">
@@ -21,20 +24,28 @@
                 {{poll.optionB}}
               </li>
             </ul>
-            <div class="text-center">
-              <button ng-show="authentication.user.username != poll.username">
-                <a ng-click="vote(poll, 'A')">Vote A</a>
-              </button>
-              <button ng-show="authentication.user.username != poll.username">
-                <a ng-click="vote(poll, 'B')">Vote B</a>
-              </button>
-            </div>
-            <br>
             <div class="text-center" ng-show="authentication.user.username == poll.username">
+              <a class="btn btn-primary" ui-sref="polls.edit({pollId: poll._id})">
+                <i class="glyphicon glyphicon-edit"></i>
+              </a>
+              <a class="btn btn-primary" ng-click="remove();">
+                <i class="glyphicon glyphicon-trash"></i>
+              </a>
+            </div>
+            <div class="text-center" ng-show="authentication.user.username != poll.username">
+              <a class="btn btn-primary" ng-click="vote(poll, 'A')">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                Vote A
+              </a>
+              <a class="btn btn-primary" ng-click="vote(poll, 'B')">Vote B
+                <i class="glyphicon glyphicon-chevron-right"></i>
+              </a>
+            </div>
+            <!-- <div class="text-center" ng-show="authentication.user.username == poll.username">
               <a ui-sref="polls.view({pollId: poll._id})">Edit Poll</a>
               <i class="glyphicon glyphicon-pencil" ui-sref="polls.edit({pollId: poll._id})"></i>
               <br><br>
-            </div>
+            </div> -->
             <hr/>
             <div class="text-center">
               <small class="list-group-item-text text-muted">

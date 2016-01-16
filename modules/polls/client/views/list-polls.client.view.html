@@ -39,13 +39,22 @@
                 {{poll.optionB}}
               </li>
             </ul>
-            <div class="text-center">
-              <button ng-show="authentication.user.username != poll.username">
-                <a ng-click="vote(poll, 'A')">Vote A</a>
-              </button>
-              <button ng-show="authentication.user.username != poll.username">
-                <a ng-click="vote(poll, 'B')">Vote B</a>
-              </button>
+            <div class="text-center" ng-show="authentication.user.username == poll.username">
+              <a class="btn btn-primary" ui-sref="polls.edit({pollId: poll._id})">
+                <i class="glyphicon glyphicon-edit"></i>
+              </a>
+              <a class="btn btn-primary" ng-click="remove();">
+                <i class="glyphicon glyphicon-trash"></i>
+              </a>
+            </div>
+            <div class="text-center" ng-show="authentication.user.username != poll.username">
+              <a class="btn btn-primary" ng-click="vote(poll, 'A')">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                Vote A
+              </a>
+              <a class="btn btn-primary" ng-click="vote(poll, 'B')">Vote B
+                <i class="glyphicon glyphicon-chevron-right"></i>
+              </a>
             </div>
             <br>
             <div class="text-center">
