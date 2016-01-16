@@ -21,7 +21,6 @@ angular.module('polls')
 	    notify.sendMsg = function(msg, data) {
 	    	data = data || {};
 	    	$rootScope.$emit(msg, data);
-	    	console.log('message sent!');
 	    };
 
 	    notify.getMsg = function(msg, func, scope) {

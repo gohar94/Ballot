@@ -1,5 +1,5 @@
 <div class="list-group">
-  <div class="col-sm-offset-3 col-sm-6 col-xs-12" ng-repeat="poll in polls | filter:searchText">
+  <div class="col-sm-offset-3 col-sm-6 col-xs-12" ng-repeat="poll in polls | filter:searchText | filter:filterExpression">
     <div class="list-group-item">
       <h4 class="text-center">
         <i class="glyphicon glyphicon-erase"></i>

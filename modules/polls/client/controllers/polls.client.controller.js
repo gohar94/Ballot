@@ -7,6 +7,9 @@ app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authe
   function ($scope, $stateParams, $location, Authentication, Polls, $http, $log, Notify) {
     $scope.authentication = Authentication;
     $scope.errorDiv = null;
+    $scope.filterExpression = { 'username' : '' };
+    $scope.showingMyPolls = false;
+    $scope.showingAllPolls = true;
 
     // Create new Poll
     $scope.create = function (isValid) {
@@ -100,6 +103,16 @@ app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authe
           $scope.error = data.message;
         });
     };
+
+    $scope.filterMyPolls = function (username) {
+      $scope.filterExpression = { 'username' : username };
+      Notify.sendMsg('ShowMyPolls');
+    };
+
+    $scope.showAllPolls = function () {
+      $scope.filterExpression = { 'username' : '' };
+      Notify.sendMsg('ShowAllPolls');
+    };
   }
 ]);
 
@@ -112,6 +125,14 @@ app.directive('pollList', ['Polls', 'Notify', function(Polls, Notify) {
       // When someone votes, update it on the poll list
       Notify.getMsg('NewVote', function(event, data) {
         scope.polls = Polls.query();
+      });
+      Notify.getMsg('ShowAllPolls', function(event, data) {
+        scope.showingAllPolls = true;
+        scope.showingMyPolls = false;
+      });
+      Notify.getMsg('ShowMyPolls', function(event, data) {
+        scope.showingAllPolls = false;
+        scope.showingMyPolls = true;
       });
     }
   };
