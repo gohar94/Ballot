@@ -70,7 +70,7 @@ pollsApp.controller('PollsController', ['$scope', '$stateParams','Authentication
       
       $http.post('/api/polls/vote', { poll: votePoll, option: voteOption })
         .success(function(data) {
-          $log.info('done');
+          // all good here
         })
         .error(function(data) {
           $scope.error = data.message;
@@ -84,7 +84,6 @@ pollsApp.controller('PollsCreateController', ['$scope', 'Polls', '$log',
     // Create new Poll
     this.create = function (isValid) {
       $scope.error = null;
-      $log.info("akaa");
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'pollCreateForm');
 
@@ -145,6 +144,53 @@ pollsApp.directive('pollList', [function() {
     }
   };
 }]);
+
+// pollsApp.controller('PollsViewController', ['$scope', '$stateParams','Authentication', 'Polls', '$modal', '$log', '$http',
+//   function ($scope, $stateParams, Authentication, Polls, $modal, $log, $http) {
+//     this.authentication = Authentication;
+//     this.animationsEnabled = true;
+
+//     // Find a list of Polls
+//     this.poll = Polls.query({ pollId: $stateParams.pollId });
+//     $log.info($stateParams.pollId);
+//     $log.info(this.poll);
+//     for (var i in this.polls) {
+//       if (this.polls[i]._id === $stateParams.pollId) {
+//         this.poll = this.polls[i];
+//       }
+//     }
+
+//     // Open a modal for updating poll records
+//     this.modalUpdate = function (size, selectedPoll) {
+//       var modalInstance = $modal.open({
+//         animation: this.animationsEnabled,
+//         templateUrl: 'modules/polls/client/views/edit-poll.client.view.html',
+//         controller: function ($scope, $modalInstance, poll) {
+//           $scope.poll = poll;
+//           $scope.ok = function () {
+//             $modalInstance.close($scope.poll);
+//           };
+
+//           $scope.cancel = function () {
+//             $modalInstance.dismiss('cancel');
+//           };
+//         },
+//         size: size,
+//         resolve: {
+//           poll: function () {
+//             return selectedPoll;
+//           }
+//         }
+//       });
+
+//       modalInstance.result.then(function (selectedItem) {
+//         $scope.selected = selectedItem;
+//       }, function () {
+//         $log.info('Modal dismissed at: ' + new Date());
+//       });
+//     };
+//   }
+// ]);
 
   //   // Remove existing Poll
   //   $scope.remove = function (poll) {

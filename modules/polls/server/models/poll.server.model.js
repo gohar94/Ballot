@@ -69,6 +69,11 @@ var PollSchema = new Schema({
     type: Boolean,
     default: true
   },
+  username: { // this is a temporary solution since user._id disappears on refreshes
+    type: String,
+    default: '',
+    required: true
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

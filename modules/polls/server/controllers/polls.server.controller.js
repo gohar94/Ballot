@@ -15,6 +15,7 @@ var path = require('path'),
 exports.create = function (req, res) {
   var poll = new Poll(req.body);
   poll.user = req.user;
+  poll.username = req.user.username;
 
   poll.save(function (err) {
     if (err) {
