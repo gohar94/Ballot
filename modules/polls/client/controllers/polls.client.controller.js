@@ -1,9 +1,12 @@
 'use strict';
 
+var app = angular.module('polls');
+
 // Polls controller
-angular.module('polls').controller('PollsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Polls', '$http', '$log',
-  function ($scope, $stateParams, $location, Authentication, Polls, $http, $log) {
+app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Polls', '$http', '$log', 'Notify',
+  function ($scope, $stateParams, $location, Authentication, Polls, $http, $log, Notify) {
     $scope.authentication = Authentication;
+    $scope.errorDiv = null;
 
     // Create new Poll
     $scope.create = function (isValid) {
@@ -88,11 +91,28 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
     $scope.vote = function (votePoll, voteOption) {
       $http.post('/api/polls/vote', { poll: votePoll, option: voteOption })
         .success(function(data) {
-          // all good here
+          // all good here, notifying the view
+          console.log(voteOption);
+          Notify.sendMsg('NewVote', { 'option': voteOption });
         })
         .error(function(data) {
+          $scope.errorDiv = votePoll._id;
           $scope.error = data.message;
         });
     };
   }
 ]);
+
+app.directive('pollList', ['Polls', 'Notify', function(Polls, Notify) {
+  return {
+    restrict: 'E',
+    transclude: true,
+    templateUrl: 'modules/polls/client/views/poll-list-template.html',
+    link: function (scope, element, attrs) {
+      // When someone votes, update it on the poll list
+      Notify.getMsg('NewVote', function(event, data) {
+        scope.polls = Polls.query();
+      });
+    }
+  };
+}]);

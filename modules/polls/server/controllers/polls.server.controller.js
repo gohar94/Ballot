@@ -139,9 +139,9 @@ exports.vote = function (req, res) {
             }
           });
         } else {
-          console.log('sending this same crap');
-          console.log(_pollVoter);
-          res.json(_pollVoter);
+          return res.status(400).send({
+            message: 'You have already voted on this poll'
+          });
         }
       });
     }
