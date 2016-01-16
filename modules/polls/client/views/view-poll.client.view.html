@@ -1,16 +1,12 @@
 <section ng-controller="PollsController" ng-init="findOne()">
   <div class="page-header text-center">
-    <!-- <h1 ng-bind="poll.description"></h1> -->
-    <h1>
-      <i class="glyphicon glyphicon-sunglasses"></i>
-      Details
-    </h1>
+    <h1>Details</h1>
   </div>
   <div class="list-group">
     <div class="col-sm-offset-3 col-sm-6 col-xs-12">
-      <a class="list-group-item">
+      <div class="list-group-item">
         <h4 class="text-center">
-          <i class="glyphicon glyphicon-user"></i>
+          <i class="glyphicon glyphicon-erase"></i>
         </h4>
         <div class="row">
           <div class="col-xs-10 col-xs-offset-1">
@@ -24,14 +20,22 @@
                 <span class="badge" ng-bind="poll.optionBVotes"></span>
                 {{poll.optionB}}
               </li>
-              <!-- <li class="list-group-item">
-                <a ui-sref="polls.edit({pollId: poll._id})">Edit</a>
-                <i class="glyphicon glyphicon-sunglasses" ui-sref="polls.view({pollId: poll._id})"></i>
-                <br><br>
-              </li> -->
             </ul>
-              <!-- <button type="button" class="btn btn-default" ng-click="remove();" ng-show="authentication.user.username == poll.username">Remove</button> -->
+            <div class="text-center">
+              <button ng-show="authentication.user.username != poll.username">
+                <a ng-click="vote(poll, 'A')">Vote A</a>
+              </button>
+              <button ng-show="authentication.user.username != poll.username">
+                <a ng-click="vote(poll, 'B')">Vote B</a>
+              </button>
+            </div>
             <br>
+            <div class="text-center" ng-show="authentication.user.username == poll.username">
+              <a ui-sref="polls.view({pollId: poll._id})">Edit Poll</a>
+              <i class="glyphicon glyphicon-pencil" ui-sref="polls.edit({pollId: poll._id})"></i>
+              <br><br>
+            </div>
+            <hr/>
             <div class="text-center">
               <small class="list-group-item-text text-muted">
                 <b><span ng-bind="poll.created | date:'mediumDate'"></span></b>
@@ -44,7 +48,7 @@
             </div>
           </div>
         </div>
-      </a>
+      </div>
       <br>
     </div>
   </div>
