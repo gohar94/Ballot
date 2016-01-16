@@ -6,15 +6,23 @@ var app = angular.module('polls');
 app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Polls', '$http', '$log', 'Notify',
   function ($scope, $stateParams, $location, Authentication, Polls, $http, $log, Notify) {
     $scope.authentication = Authentication;
+
+    // UI related items
     $scope.errorDiv = null;
     $scope.filterExpression = { 'username' : '' };
     $scope.showingMyPolls = false;
     $scope.showingAllPolls = true;
+    $scope.categoryOptions = [
+      { id: 1, name: 'Politics' },
+      { id: 2, name: 'Sports' },
+      { id: 3, name: 'Food & Dining' },
+      { id: 4, name: 'Other' }
+    ];
 
     // Create new Poll
     $scope.create = function (isValid) {
       $scope.error = null;
-
+      $log.info(this.category.name);
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'pollForm');
 
@@ -26,7 +34,7 @@ app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authe
         description: this.description,
         optionA: this.optionA,
         optionB: this.optionB,
-        category: this.category
+        category: this.category.name
       });
 
       // Redirect after save

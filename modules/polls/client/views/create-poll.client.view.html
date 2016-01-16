@@ -33,7 +33,9 @@
         </div>
         <div class="form-group" show-errors>
           <label for="category">Category</label>
-          <input name="category" type="text" ng-model="category" id="category" class="form-control" placeholder="Category" required></input>
+          <select ng-model="category" ng-options="item.name for item in categoryOptions" class="form-control" id="category">
+            <option value="">Choose a category</option>
+          </select>
         </div>
         <div class="text-center form-group">
           <button type="submit" class="btn btn-large btn-success">Submit</button>

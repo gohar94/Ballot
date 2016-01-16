@@ -26,7 +26,7 @@
               {{poll.optionB}}
             </li>
           </ul>
-          <div class="text-center" ng-show="authentication.user.username == poll.username">
+          <div class="text-center" ng-show="authentication.user && authentication.user.username == poll.username">
             <a class="btn btn-primary" ui-sref="polls.edit({pollId: poll._id})">
               <i class="glyphicon glyphicon-edit"></i>
             </a>
@@ -34,7 +34,7 @@
               <i class="glyphicon glyphicon-trash"></i>
             </a>
           </div>
-          <div class="text-center" ng-show="authentication.user.username != poll.username">
+          <div class="text-center" ng-show="authentication.user && authentication.user.username != poll.username">
             <a class="btn btn-success" ng-click="vote(poll, 'A')">
               <i class="glyphicon glyphicon-chevron-left"></i>
               Vote A
