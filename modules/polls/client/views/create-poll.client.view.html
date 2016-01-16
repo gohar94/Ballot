@@ -1,9 +1,9 @@
-<section ng-controller="PollsCreateController as pollCrCtrl">
-  <div class="modal-header">
-    <h3 class="modal-title">New Customer</h3>
+<section ng-controller="PollsController">
+  <div class="page-header text-center">
+    <h1>New Poll</h1>
   </div>
-  <div class="modal-body">
-    <form name="pollCreateForm">
+  <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 create-form-bg">
+    <form name="pollForm" class="form-horizontal" ng-submit="create(pollForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group">
           <div ng-show="error" class="text-center text-danger">
@@ -18,29 +18,27 @@
         </div>
         <div class="form-group" show-errors>
           <label for="title">Description</label>
-          <input name="title" type="text" ng-model="pollCrCtrl.description" ng-maxlength="140" maxlength="140" id="description" class="form-control" placeholder="Description" required>
+          <input name="title" type="text" ng-model="description" ng-maxlength="140" maxlength="140" id="description" class="form-control" placeholder="Description" required>
           <div ng-messages="pollForm.description.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Poll description is required.</p>
           </div>
         </div>
         <div class="form-group" show-errors>
           <label for="content">Option A</label>
-          <input name="optionA" type="text" ng-maxlength="50" maxlength="50" ng-model="pollCrCtrl.optionA" id="optionA" class="form-control" placeholder="Option A" required></input>
+          <input name="optionA" type="text" ng-maxlength="50" maxlength="50" ng-model="optionA" id="optionA" class="form-control" placeholder="Option A" required></input>
         </div>
         <div class="form-group" show-errors>
           <label for="optionB">Option B</label>
-          <input name="optionB" type="text" ng-maxlength="50" maxlength="50" ng-model="pollCrCtrl.optionB" id="optionB" class="form-control" placeholder="Option B" required></input>
+          <input name="optionB" type="text" ng-maxlength="50" maxlength="50" ng-model="optionB" id="optionB" class="form-control" placeholder="Option B" required></input>
         </div>
         <div class="form-group" show-errors>
           <label for="category">Category</label>
-          <input name="category" type="text" ng-model="pollCrCtrl.category" id="category" class="form-control" placeholder="Category" required></input>
+          <input name="category" type="text" ng-model="category" id="category" class="form-control" placeholder="Category" required></input>
+        </div>
+        <div class="text-center form-group">
+          <button type="submit" class="btn btn-large btn-success">Submit</button>
         </div>
       </fieldset>
     </form>
   </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" ng-click="pollCrCtrl.create(pollCreateForm.$valid); ok()" ng-disabled="pollCreate.$invalid">Save & Close</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-  </div>
-</section>
 </section>

@@ -78,9 +78,6 @@ exports.isAllowedToVote = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
   // If an poll is being processed and the current user created it then do not allow any manipulation
-  console.log("poll");
-  console.log(req.body.poll.user._id);
-  console.log(req.user.id);
   if (req.body.poll && req.user && req.body.poll.user) {
     if (String(req.body.poll.user._id) === String(req.user._id)) {
       // don't process this

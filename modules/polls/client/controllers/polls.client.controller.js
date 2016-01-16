@@ -1,91 +1,16 @@
 'use strict';
 
-var pollsApp = angular.module('polls');
-
 // Polls controller
-pollsApp.controller('PollsController', ['$scope', '$stateParams','Authentication', 'Polls', '$modal', '$log', '$http',
-  function ($scope, $stateParams, Authentication, Polls, $modal, $log, $http) {
-    this.authentication = Authentication;
-    this.animationsEnabled = true;
+angular.module('polls').controller('PollsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Polls', '$http', '$log',
+  function ($scope, $stateParams, $location, Authentication, Polls, $http, $log) {
+    $scope.authentication = Authentication;
 
-    // Find a list of Polls
-    this.polls = Polls.query();
-
-    // Open a modal for creating poll records
-    this.modalCreate = function (size) {
-      var modalInstance = $modal.open({
-        animation: this.animationsEnabled,
-        templateUrl: 'modules/polls/client/views/create-poll.client.view.html',
-        controller: function ($scope, $modalInstance) {
-
-          $scope.ok = function () {
-            $modalInstance.close();
-          };
-
-          $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-          };
-        },
-        size: size
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-    // Open a modal for updating poll records
-    this.modalUpdate = function (size, selectedPoll) {
-      var modalInstance = $modal.open({
-        animation: this.animationsEnabled,
-        templateUrl: 'modules/polls/client/views/edit-poll.client.view.html',
-        controller: function ($scope, $modalInstance, poll) {
-          $scope.poll = poll;
-          $scope.ok = function () {
-            $modalInstance.close($scope.poll);
-          };
-
-          $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-          };
-        },
-        size: size,
-        resolve: {
-          poll: function () {
-            return selectedPoll;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-    this.vote = function (votePoll, voteOption) {
-      $scope.error = null;
-      
-      $http.post('/api/polls/vote', { poll: votePoll, option: voteOption })
-        .success(function(data) {
-          // all good here
-        })
-        .error(function(data) {
-          $scope.error = data.message;
-        });
-    };
-  }
-]);
-
-pollsApp.controller('PollsCreateController', ['$scope', 'Polls', '$log',
-  function ($scope, Polls, $log) {
     // Create new Poll
-    this.create = function (isValid) {
+    $scope.create = function (isValid) {
       $scope.error = null;
+
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'pollCreateForm');
+        $scope.$broadcast('show-errors-check-validity', 'pollForm');
 
         return false;
       }
@@ -100,6 +25,8 @@ pollsApp.controller('PollsCreateController', ['$scope', 'Polls', '$log',
 
       // Redirect after save
       poll.$save(function (response) {
+        $location.path('polls/' + response._id);
+
         // Clear form fields
         $scope.description = '';
         $scope.optionA = '';
@@ -109,110 +36,65 @@ pollsApp.controller('PollsCreateController', ['$scope', 'Polls', '$log',
         $scope.error = errorResponse.data.message;
       });
     };
-  }
-]);
 
-pollsApp.controller('PollsUpdateController', ['$scope', 'Polls',
-  function ($scope, Polls) {
+    // Remove existing Poll
+    $scope.remove = function (poll) {
+      if (poll) {
+        poll.$remove();
+
+        for (var i in $scope.polls) {
+          if ($scope.polls[i] === poll) {
+            $scope.polls.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.poll.$remove(function () {
+          $location.path('polls');
+        });
+      }
+    };
+
     // Update existing Poll
-    this.update = function (isValid, updatedPoll) {
+    $scope.update = function (isValid) {
       $scope.error = null;
-      
-      if (!isValid) { 
-        $scope.$broadcast('show-errors-check-validity', 'pollUpdateForm');
+
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'pollForm');
 
         return false;
       }
-      var poll = updatedPoll;
+
+      var poll = $scope.poll;
 
       poll.$update(function () {
-
+        $location.path('polls/' + poll._id);
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
     };
+
+    // Find a list of Polls
+    $scope.find = function () {
+      $scope.polls = Polls.query();
+    };
+
+    // Find existing Poll
+    $scope.findOne = function () {
+      $scope.poll = Polls.get({
+        pollId: $stateParams.pollId
+      });
+    };
+
+    $scope.vote = function (votePoll, voteOption) {
+      $scope.error = null;
+      
+      $http.post('/api/polls/vote', { poll: votePoll, option: voteOption })
+        .success(function(data) {
+          // all good here
+        })
+        .error(function(data) {
+          $scope.error = data.message;
+        });
+    };
   }
 ]);
-
-pollsApp.directive('pollList', [function() {
-  return {
-    restrict: 'E',
-    transclude: true,
-    templateUrl: 'modules/polls/client/views/poll-list-template.html',
-    link: function (scope, element, attrs) {
-
-    }
-  };
-}]);
-
-// pollsApp.controller('PollsViewController', ['$scope', '$stateParams','Authentication', 'Polls', '$modal', '$log', '$http',
-//   function ($scope, $stateParams, Authentication, Polls, $modal, $log, $http) {
-//     this.authentication = Authentication;
-//     this.animationsEnabled = true;
-
-//     // Find a list of Polls
-//     this.poll = Polls.query({ pollId: $stateParams.pollId });
-//     $log.info($stateParams.pollId);
-//     $log.info(this.poll);
-//     for (var i in this.polls) {
-//       if (this.polls[i]._id === $stateParams.pollId) {
-//         this.poll = this.polls[i];
-//       }
-//     }
-
-//     // Open a modal for updating poll records
-//     this.modalUpdate = function (size, selectedPoll) {
-//       var modalInstance = $modal.open({
-//         animation: this.animationsEnabled,
-//         templateUrl: 'modules/polls/client/views/edit-poll.client.view.html',
-//         controller: function ($scope, $modalInstance, poll) {
-//           $scope.poll = poll;
-//           $scope.ok = function () {
-//             $modalInstance.close($scope.poll);
-//           };
-
-//           $scope.cancel = function () {
-//             $modalInstance.dismiss('cancel');
-//           };
-//         },
-//         size: size,
-//         resolve: {
-//           poll: function () {
-//             return selectedPoll;
-//           }
-//         }
-//       });
-
-//       modalInstance.result.then(function (selectedItem) {
-//         $scope.selected = selectedItem;
-//       }, function () {
-//         $log.info('Modal dismissed at: ' + new Date());
-//       });
-//     };
-//   }
-// ]);
-
-  //   // Remove existing Poll
-  //   $scope.remove = function (poll) {
-  //     if (poll) {
-  //       poll.$remove();
-
-  //       for (var i in $scope.polls) {
-  //         if ($scope.polls[i] === poll) {
-  //           $scope.polls.splice(i, 1);
-  //         }
-  //       }
-  //     } else {
-  //       $scope.poll.$remove(function () {
-  //         $location.path('polls');
-  //       });
-  //     }
-  //   };
-
-  //   // Find existing Poll
-  //   $scope.findOne = function () {
-  //     $scope.poll = Polls.get({
-  //       pollId: $stateParams.pollId
-  //     });
-  //   };
-  // }

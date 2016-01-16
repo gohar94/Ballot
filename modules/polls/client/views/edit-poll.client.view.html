@@ -1,9 +1,9 @@
-<section ng-controller="PollsUpdateController as pollUpCtrl">
-  <div class="modal-header">
-    <h3 class="modal-title">Edit Customer</h3>
+<section ng-controller="PollsController" ng-init="findOne()">
+  <div class="page-header text-center">
+    <h1>New Poll</h1>
   </div>
-  <div class="modal-body">
-    <form name="pollUpdateForm">
+  <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 create-form-bg">
+    <form name="pollForm" class="form-horizontal" ng-submit="update(pollForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group">
           <div ng-show="error" class="text-center text-danger">
@@ -35,11 +35,10 @@
           <label for="category">Category</label>
           <input name="category" type="text" ng-model="poll.category" id="category" class="form-control" placeholder="Category" required></input>
         </div>
+        <div class="text-center form-group">
+          <button type="submit" class="btn btn-large btn-success">Submit</button>
+        </div>
       </fieldset>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" ng-click="pollUpCtrl.update(pollUpdateForm.$valid, poll); ok()" ng-disabled="pollUpdateForm.$invalid">Update & Close</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
   </div>
 </section>
