@@ -86,8 +86,6 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
     };
 
     $scope.vote = function (votePoll, voteOption) {
-      $scope.error = null;
-      
       $http.post('/api/polls/vote', { poll: votePoll, option: voteOption })
         .success(function(data) {
           // all good here
