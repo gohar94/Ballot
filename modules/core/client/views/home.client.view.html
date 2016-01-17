@@ -12,10 +12,12 @@
       </p>
     </div>
     <div class="row">
-      <p>
-        <hr/>
-        <a class="btn btn-primary btn-lg" ui-sref="authentication.signup">Get Started</a>
-      </p>
+      <div class="text-center" ng-show="!authentication.user">
+        <a class="btn btn-primary" ui-sref="authentication.signup">Sign Up</a>
+      </div>
+      <div class="text-center" ng-show="authentication.user">
+        <a class="btn btn-primary" ui-sref="polls.list">Get Started</a>
+      </div>
     </div>
   </div>
   <div class="text-center">

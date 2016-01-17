@@ -1,9 +1,7 @@
 <section class="row" ng-controller="AuthenticationController">
   <h3 class="text-center">Sign in using your social accounts</h3>
   <div class="col-md-12 text-center">
-    <a class="btn btn-block btn-social btn-facebook" ng-click="callOauthProvider('/api/auth/facebook')">
-      <span class="fa fa-facebook"></span> Sign in with Facebook
-    </a>
+    <img ng-click="callOauthProvider('/api/auth/facebook')" ng-src="/modules/users/client/img/buttons/facebook.png">
     <!-- <img ng-click="callOauthProvider('/api/auth/twitter')" ng-src="/modules/users/client/img/buttons/twitter.png"> -->
   </div>
   <div ui-view></div>
