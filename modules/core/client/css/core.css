@@ -37,7 +37,7 @@ a:hover .header-profile-image {
 }
 body {
   /*background-color: #eeeeee;*/
-  background: url("../img/brand/home_background.png");
+  background: url("/modules/core/client/img/brand/home_background.png");
 }
 hr { 
   background-color: transparent;
