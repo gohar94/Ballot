@@ -18,18 +18,18 @@
         </div>
         <div class="form-group" show-errors>
           <label for="title">Description</label>
-          <input name="title" type="text" ng-model="description" ng-maxlength="140" maxlength="140" id="description" class="form-control" placeholder="Description" required>
+          <input name="title" type="text" ng-model="description" ng-maxlength="140" maxlength="140" id="description" class="form-control" placeholder="e.g. Next POTUS? (max. 140 characters)" required>
           <div ng-messages="pollForm.description.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Poll description is required.</p>
           </div>
         </div>
         <div class="form-group" show-errors>
           <label for="content">Option A</label>
-          <input name="optionA" type="text" ng-maxlength="50" maxlength="50" ng-model="optionA" id="optionA" class="form-control" placeholder="Option A" required></input>
+          <input name="optionA" type="text" ng-maxlength="50" maxlength="50" ng-model="optionA" id="optionA" class="form-control" placeholder="e.g. Donald Duck (max. 50 characters)" required></input>
         </div>
         <div class="form-group" show-errors>
           <label for="optionB">Option B</label>
-          <input name="optionB" type="text" ng-maxlength="50" maxlength="50" ng-model="optionB" id="optionB" class="form-control" placeholder="Option B" required></input>
+          <input name="optionB" type="text" ng-maxlength="50" maxlength="50" ng-model="optionB" id="optionB" class="form-control" placeholder="e.g. Willy Wonka (max. 50 characters)" required></input>
         </div>
         <div class="form-group" show-errors>
           <label for="category">Category</label>
