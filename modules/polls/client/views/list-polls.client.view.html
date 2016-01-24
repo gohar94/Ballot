@@ -16,8 +16,8 @@
           <i class="glyphicon glyphicon-erase" ui-sref="polls.create()"></i>
           New Poll
         </a>
-        <a ng-click="filterMyPolls(authentication.user.username)" class="btn btn-primary" ng-show="authentication.user && showingAllPolls">
-          <i class="glyphicon glyphicon-erase" ng-click="filterMyPolls(authentication.user.username)"></i>
+        <a ng-click="filterMyPolls(authentication.user._id)" class="btn btn-primary" ng-show="authentication.user && showingAllPolls">
+          <i class="glyphicon glyphicon-erase" ng-click="filterMyPolls(authentication.user._id)"></i>
           My Polls
         </a>
         <a ng-click="showAllPolls()" class="btn btn-primary" ng-show="authentication.user && showingMyPolls">

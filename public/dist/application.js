@@ -623,7 +623,7 @@ app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authe
 
     // UI related items
     $scope.errorDiv = null;
-    $scope.filterExpression = { 'username' : '' };
+    $scope.filterExpression = { user: { _id : '' } };
     $scope.showingMyPolls = false;
     $scope.showingAllPolls = true;
     $scope.categoryOptions = [
@@ -726,13 +726,13 @@ app.controller('PollsController', ['$scope', '$stateParams', '$location', 'Authe
         });
     };
 
-    $scope.filterMyPolls = function (username) {
-      $scope.filterExpression = { 'username' : username };
+    $scope.filterMyPolls = function (id) {
+      $scope.filterExpression = { user: { _id : id } };
       Notify.sendMsg('ShowMyPolls');
     };
 
     $scope.showAllPolls = function () {
-      $scope.filterExpression = { 'username' : '' };
+      $scope.filterExpression = { user: { _id : '' } };
       Notify.sendMsg('ShowAllPolls');
     };
   }
